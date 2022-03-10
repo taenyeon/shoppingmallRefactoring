@@ -42,8 +42,8 @@ public class MemberService {
     }
 
     public List<Member> getMembers(String chkInfo, String condition) {
-        List<Member> members = new ArrayList<Member>();
-        List<Member> memberLevel = new ArrayList<Member>();
+        List<Member> members = new ArrayList<>();
+        List<Member> memberLevel = new ArrayList<>();
         try{
         	members = memberRepository.findAll(chkInfo, condition);
         	if(chkInfo.equals("member_level")) {
@@ -63,28 +63,17 @@ public class MemberService {
     }
 
     public int insertMember(Member member) {
-    	log.info(this.getClass()+"--->>> [MEMBER INSERT]");
     	validateDuplicateMember(member);
-        try {
-            System.out.println("암호화 전 -->" + member.getMemberPwd());
-            member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("암호화 후 -->" + member.getMemberPwd());
-        int result = memberRepository.insertMember(member);
-
-        return result;
+        member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
+        return memberRepository.insertMember(member);
     }
 
     public Member loginMember(Member member) {
         String userPwd = member.getMemberPwd();
         //로그인한 유저 id를 조회한다.
-        Optional<Member> loginMemberOptional = memberRepository.findById(member.getMemberId());
-        Member loginMember = loginMemberOptional.
+        Member loginMember = memberRepository.findById(member.getMemberId()).
         		orElseThrow(() -> new IllegalStateException("아이디가 틀리거나 없는 회원입니다.") );
         if (BCrypt.checkpw(userPwd, loginMember.getMemberPwd())) {
-            System.out.println("true");
             return loginMember;
         } else {
         	throw new IllegalStateException("비밀번호 오류입니다.");
@@ -99,16 +88,9 @@ public class MemberService {
     }
 
     public int updateMember(Member member) {
-        try {
         	if(member.getMemberPwd() != null && !member.getMemberPwd().equals("")) {
-        		System.out.println("암호화 전 -->" + member.getMemberPwd());
         		member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
         	}
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("암호화 후 -->" + member.getMemberPwd());
-
         return memberRepository.updateMember(member);
     }
     
@@ -125,19 +107,11 @@ public class MemberService {
     }
     
     public int updateByAdmin(Member member) {
-    	 try {
-             System.out.println("암호화 전 -->" + member.getMemberPwd());
-             member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-         System.out.println("암호화 후 -->" + member.getMemberPwd());
-         
+        member.setMemberPwd(BCrypt.hashpw(member.getMemberPwd(), BCrypt.gensalt()));
     	return memberRepository.updateByAdmin(member);
     }
 
 	public List<Chart> getTotalPayChart() {
-		List<Chart> tOrderChart = memberRepository.getTotalPayChart();
-		return tOrderChart;
+        return memberRepository.getTotalPayChart();
 	}
 }

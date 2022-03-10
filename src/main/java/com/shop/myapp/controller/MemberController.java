@@ -89,13 +89,10 @@ public class MemberController {
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/delete")
     public String delete(@PathVariable String memberId, HttpServletRequest request) {
-        MemberSession member1 = (MemberSession) session.getAttribute("member");
-        if (!member1.getMemberId().equals(memberId)){
+        MemberSession mSession = (MemberSession) session.getAttribute("member");
+        if (!mSession.getMemberId().equals(memberId)){
             throw new IllegalStateException("권한 없음");
         }
-    	// 에러가 있는지 검사
-    	log.info("delete member.");
-    	
     	int isDelete = memberService.deleteMember(memberId);
     	System.out.println("회원탈퇴 성공("+isDelete+")");
     	log.info("update complete.");
@@ -111,8 +108,6 @@ public class MemberController {
     
     @PostMapping("/login")
     public String login(@ModelAttribute Member member, HttpServletRequest request){
-        System.out.println("PWD : "+member.getMemberPwd());
-    	log.info("login");
     	Member mem = memberService.loginMember(member);
     	
     	MemberSession mSession = new MemberSession();
@@ -128,8 +123,8 @@ public class MemberController {
     @ResponseBody
     @Auth(role = Auth.Role.USER)
     public ResponseEntity<Object> getMemberInfo(@PathVariable String memberId){
-        MemberSession member1 = (MemberSession) session.getAttribute("member");
-        if (!member1.getMemberId().equals(memberId)){
+        MemberSession mSession = (MemberSession) session.getAttribute("member");
+        if (!mSession.getMemberId().equals(memberId)){
             throw new IllegalStateException("권한 없음");
         }
         Member member = memberService.getMember(memberId);
