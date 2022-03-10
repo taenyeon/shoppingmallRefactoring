@@ -1,0 +1,100 @@
+
+.paging {
+  margin-top: 25px;
+  text-align: center;
+  display: flex;
+}
+
+.paging a {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: "hanwhaB";
+  color: #666;
+  margin: 0 3px;
+}
+
+.paging > a {
+  position: relative;
+  width: 28px;/* 버튼 가로값 */
+  height: 28px;/* 버튼 세로값 */
+  border: 1px solid #cecece;
+}
+
+.paging > a > span {
+  font-size: 0;
+}
+
+.paging > a::before, .paging > a::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border: solid #000;
+  border-width: 1px 1px 0 0;
+}
+
+.paging > a.disabled::before, .paging > a.disabled::after {
+  border: solid #cecece;
+  border-width: 1px 1px 0 0;
+}
+
+.paging .btn_first::before {
+  left: 7px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.paging .btn_first::after {
+  left: 13px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.paging .btn_pre::before {
+  left: 10px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.paging .btn_pre::after {
+  display: none;
+}
+
+.paging .btn_next::after {
+  display: none;
+}
+
+.paging .btn_next::before {
+  left: 7px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.paging .btn_last::before {
+  left: 3px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.paging .btn_last::after {
+  left: 9px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.paging .paging_num {
+  padding: 0 15px;
+}
+
+.paging .paging_num a {
+  width: 17px;/* 숫자 가로값 */
+  line-height: 28px;
+}
+
+.paging .paging_num a.on span {
+  color: #000;
+  border-bottom: 2px solid #000;
+}

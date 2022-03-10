@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.MemberRepository">
+
+    <insert id="insertMember">
+        INSERT INTO SHOP_MEMBER_TB (MEMBER_ID, MEMBER_PWD,
+         	<if test ="memberLevelToString != null">
+         			MEMBER_LEVEL,
+         	</if>
+                                   MEMBER_NAME, MEMBER_EMAIL, MEMBER_ADDRESS, MEMBER_DETAIL_ADDRESS,
+                                   MEMBER_TEL, MEMBER_BIRTH, BUSINESS_REGISTRATION_NO,
+                                   BUSINESS_NAME, BUSINESS_INFO)
+        VALUES (#{memberId}, #{memberPwd},
+          	<if test ="memberLevelToString != null and !memberLevelToString.equals('')">
+        		#{memberLevelToString},
+        	</if>
+                #{memberName}, #{memberEmail}, #{memberAddress}, #{memberDetailAddress}, #{memberTel}, #{memberBirth}
+                   , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR}
+                   ,#{businessInfo,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateMember">
+        UPDATE SHOP_MEMBER_TB
+        SET 
+        <if test ="memberPwd != null and !memberPwd.equals('')">
+        	MEMBER_PWD   = #{memberPwd},
+        </if>
+            MEMBER_NAME=#{memberName},
+            MEMBER_ADDRESS=#{memberAddress},
+            MEMBER_DETAIL_ADDRESS=#{memberDetailAddress},
+            MEMBER_TEL=#{memberTel},
+            MEMBER_BIRTH=#{memberBirth}
+            <if test="memberLevel != null and memberLevel.size > 1">
+            	,BUSINESS_NAME   = #{businessName},
+        		BUSINESS_REGISTRATION_NO = #{businessRegistrationNo}
+            </if>
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+    
+    <update id="updateSeller" >
+        update HR.SHOP_MEMBER_TB
+set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{businessInfo} where member_id = #{memberId}
+    </update>
+    
+    <update id="updateByAdmin" >
+		UPDATE SHOP_MEMBER_TB
+		SET MEMBER_PWD = #{memberPwd},
+			MEMBER_LEVEL = #{memberLevelToString},
+			IS_DELETE = #{isDelete}
+		WHERE MEMBER_ID = #{memberId}
+    </update>
+    
+    <update id="deleteMember">
+    	UPDATE SHOP_MEMBER_TB 
+    	SET IS_DELETE = '1'
+    	WHERE MEMBER_ID = #{memberId}
+    </update>
+    
+    <select id="findAll" resultType="com.shop.myapp.dto.Member" >
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        <if test ="condition !=null and condition !='' and chkInfo != 'member_level'">
+         WHERE ${chkInfo} LIKE '%'||#{condition}||'%'
+        </if>
+    </select>
+    <select id="findById" resultType="com.shop.myapp.dto.Member">
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        WHERE MEMBER_ID = #{memberId}
+        AND IS_DELETE = 0
+    </select>
+    
+    <select id="getTotalPayChart" resultType="com.shop.myapp.dto.Chart">
+        SELECT TO_CHAR(PAID_AT,'YYYY-MM-DD') as paid_at, SUM(TOTAL_PAY) AS TOTAL_PAY
+        FROM SHOP_ORDER_TB GROUP BY TO_CHAR(PAID_AT,'YYYY-MM-DD') ORDER BY PAID_AT ASC
+    </select>
+    <select id="findByIdAdmin" resultType="com.shop.myapp.dto.Member">
+        SELECT *
+        FROM SHOP_MEMBER_TB
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+
+</mapper>

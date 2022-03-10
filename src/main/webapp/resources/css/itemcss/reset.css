@@ -1,0 +1,395 @@
+@charset "UTF-8";
+/* -------------------------------------------------------------------------------
+	Font
+ ------------------------------------------------------------------------------- */
+/* base */
+/* -------------------------------------------------------------------------------
+	reset
+ ------------------------------------------------------------------------------- */
+/* 초기화 */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  max-height: 999999999px;
+}
+*:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-width: 1280px;
+  height: 100%;
+  overflow-x: auto;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: sans-serif;
+  color: #000;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  resize: none;
+  -webkit-text-size-adjust: none;
+  word-break: keep-all;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+}
+
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+span,
+p,
+blockquote,
+pre,
+abbr,
+acronym,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+figure,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+form,
+fieldset,
+legend,
+a,
+textarea,
+input,
+select,
+option,
+button,
+label,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  resize: none;
+  -webkit-text-size-adjust: none;
+  word-break: keep-all;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-size: inherit;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+var,
+i {
+  font-style: normal;
+  font-weight: normal;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+hr {
+  overflow: hidden;
+  position: absolute;
+  left: -9999em;
+  top: 0;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+ins {
+  text-decoration: none;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+sub {
+  line-height: 0;
+  position: relative;
+}
+
+sup {
+  line-height: 0;
+  position: relative;
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+em {
+  font-style: normal;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  word-break: break-all;
+}
+a:link, a:visited, a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+/* strong {
+  font-weight: normal !important;
+} */
+
+
+/* -------------------------------------------------------------------------------
+    Form
+ ------------------------------------------------------------------------------- */
+/* form 요소 */
+input[type=text],
+input[type=date],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=email],
+select,
+textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid 1px #e5e5e5;
+  border-width: 0 0 1px 0;
+  background: transparent;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  color: #000;
+  transition: all 0.2s;
+  border-radius: 0;
+}
+input[type=text]::placeholder,
+input[type=date]::placeholder,
+input[type=number]::placeholder,
+input[type=password]::placeholder,
+input[type=search]::placeholder,
+input[type=tel]::placeholder,
+input[type=email]::placeholder,
+select::placeholder,
+textarea::placeholder {
+  color: #888;
+  font-weight: 300;
+}
+input[type=text]::-webkit-input-placeholder,
+input[type=date]::-webkit-input-placeholder,
+input[type=number]::-webkit-input-placeholder,
+input[type=password]::-webkit-input-placeholder,
+input[type=search]::-webkit-input-placeholder,
+input[type=tel]::-webkit-input-placeholder,
+input[type=email]::-webkit-input-placeholder,
+select::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #888;
+  font-weight: 300;
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=email]:focus,
+select:focus,
+textarea:focus {
+  border-color: #000;
+  outline: 0;
+}
+input[type=text]:disabled,
+input[type=date]:disabled,
+input[type=number]:disabled,
+input[type=password]:disabled,
+input[type=search]:disabled,
+input[type=tel]:disabled,
+input[type=email]:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 1;
+  -webkit-opacity: 1;
+  -webkit-text-fill-color: #aaa;
+  color: #aaa;
+}
+.error input[type=text],
+.error input[type=date],
+.error input[type=number],
+.error input[type=password],
+.error input[type=search],
+.error input[type=tel],
+.error input[type=email],
+.error select,
+.error textarea {
+  border-color: #f60;
+}
+
+input[type=text]:read-only,
+input[type=date]:read-only,
+input[type=number]:read-only,
+input[type=password]:read-only,
+input[type=search]:read-only,
+input[type=tel]:read-only,
+input[type=email]:read-only,
+textarea:read-only {
+  border-color: #eee;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+textarea {
+  width: 100%;
+  height: 225px;
+  padding: 10px;
+  border: solid 1px #e0e0e0;
+  background: #fff;
+  color: #666;
+  font-size: 14px;
+  resize: none;
+}
+
+
+select {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+    min-width: 100px;
+	padding: 0 40px 0 16px;  
+	height: 40px;
+	font-size: 16px;
+	line-height: 1.2;
+	text-align: left;
+    color: #554344;
+	border: 0;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+	z-index: 1;
+    -webkit-appearance: none !important; /* 화살표 없애기 for chrome*/ 
+    -moz-appearance: none !important;    /* 화살표 없애기 for firefox*/ 
+    appearance: none !important;         /* 화살표 없애기 공통*/
+    background: #fff url("data:image/svg+xml,%3Csvg width='15' height='20' viewBox='0 0 15 20' fill='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Crect width='15' height='20' fill='url(%23pattern0)'/%3E%3Cdefs%3E%3Cpattern id='pattern0' patternContentUnits='objectBoundingBox' width='1' height='1'%3E%3Cuse xlink:href='%23image0' transform='scale(0.0666667 0.05)'/%3E%3C/pattern%3E%3Cimage id='image0' width='15' height='20' xlink:href='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAUCAYAAABSx2cSAAAASElEQVQ4T2NkoAAwUqCXYVQziaFH1QD7T4TlcAux2YzPABT1uJyNzQAMtfj8jGwAVnWEAgxkAE41hDTjDb9RzUQkL2QlFAUYAKkPBRXb5rq1AAAAAElFTkSuQmCC'/%3E%3C/defs%3E%3C/svg%3E%0A") no-repeat center right 10px / 15px 20px;
+    border: 1px solid #DBDAD4;
+}
+
+select::-ms-expand {
+    display: none;            /* 화살표 없애기 for IE10, 11*/ 
+ }

@@ -1,0 +1,142 @@
+@charset "UTF-8";
+
+.staple-goods-top {
+	margin-bottom: 30px;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+	justify-content: space-between;
+}
+.staple-goods-top .total {
+	font-size: 20px;
+	line-height: 40px;
+}
+.staple-goods-top .total span {
+	color:  #8041D9;
+}
+
+
+
+.staple-goods-list {
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.staple-goods-list > div {
+	margin-right: 18px;
+    margin-bottom: 18px;
+    width: calc(25% - 14px);
+}
+.staple-goods-list > div:nth-child(4n) {
+    margin-right: 0;
+}
+.staple-goods-list div img {
+	display: block;
+	width: 100%;
+	border: 1px solid #ddd;	
+}
+.staple-goods-list div strong {
+	display: block;
+	margin: 10px 0 7px;
+}
+.staple-goods-list div a > span {
+	display: block;
+}
+
+.staple-goods-list div a .pay-box span {
+	font-size: 13px;
+	display: inline-block;
+}
+
+.staple-goods-list div a .pay-box span.pay {
+	font-weight: bold;
+}
+
+.staple-goods-list div a .pay-box span.sale {
+	font-size: 12px;
+	color: #999;
+	text-decoration: line-through;
+}
+
+
+
+.staple-goods-paging {
+    margin-top: 38px;
+    text-align: center;
+}
+.staple-goods-paging a {
+    display: inline-block;
+    vertical-align: top;
+    zoom: 1;
+    font-size: 17px;
+    font-family: hanwhaB;
+    color: #666;
+}
+.staple-goods-paging > a {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #cecece
+}
+.staple-goods-paging>a>span {
+    font-size: 0;
+}
+.staple-goods-paging>a:after, 
+.staple-goods-paging>a:before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border: solid #1c1c1c;
+    border-width: 1px 1px 0 0;
+}
+.staple-goods-paging> a.btn_pre:after, 
+.staple-goods-paging> a.btn_next:after {
+    display: none;
+}
+.staple-goods-paging .btn_first:after, 
+.staple-goods-paging .btn_first:before, 
+.staple-goods-paging .btn_pre:before {
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+.staple-goods-paging .btn_last:after, 
+.staple-goods-paging .btn_last:before, 
+.staple-goods-paging .btn_next:before {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.staple-goods-paging .btn_first:before, 
+.staple-goods-paging .btn_next:before {
+    left: 7px;
+}
+.staple-goods-paging .btn_first:after {
+    left: 13px;
+}
+.staple-goods-paging .btn_pre:before {
+    left: 10px;
+}
+.staple-goods-paging .btn_last:before {
+    left: 3px;
+}
+.staple-goods-paging .btn_last:after {
+    left: 9px;
+}
+.staple-goods-paging .paging_num {
+    padding: 0 15px;
+    display: inline-block;
+}
+.staple-goods-paging .paging_num a {
+    width: 30px;
+    line-height: 26px;
+}
+.staple-goods-paging .paging_num a.on span {
+    color: #1c1c1c;
+    border-bottom: 2px solid #1c1c1c;
+}

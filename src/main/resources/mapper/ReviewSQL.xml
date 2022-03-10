@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.ReviewRepository">
+
+    <insert id="insertReview">
+        INSERT INTO SHOP_REVIEW_TB
+        VALUES (CODE_REVIEW_SQ.NEXTVAL, #{itemCode}, #{memberId},
+                #{reviewContent}, #{reviewStar})
+    </insert>
+    <update id="updateReview">
+        UPDATE SHOP_REVIEW_TB
+        SET REVIEW_CONTENT=#{reviewContent}
+        WHERE REVIEW_CODE = #{reviewCode}
+    </update>
+
+    <delete id="deleteReview">
+        delete HR.SHOP_REVIEW_TB
+        where HR.SHOP_REVIEW_TB.REVIEW_CODE = #{reviewCode}
+    </delete>
+
+    <select id="findAll" resultType="com.shop.myapp.dto.Review">
+        SELECT *
+        FROM SHOP_REVIEW_TB where ITEM_CODE = #{itemCode}
+    </select>
+    <select id="getReivewList" resultType="com.shop.myapp.dto.Review">
+        SELECT *
+        FROM SHOP_REVIEW_TB
+    </select>
+
+    <select id="findByReviewCode" resultType="com.shop.myapp.dto.Review">
+        SELECT *
+        FROM HR.SHOP_REVIEW_TB
+        WHERE REVIEW_CODE = #{reviewCode}
+    </select>
+
+
+</mapper>

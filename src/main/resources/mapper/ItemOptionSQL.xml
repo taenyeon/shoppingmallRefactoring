@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.ItemOptionRepository">
+
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <id property="optionCode" column="option_code"/>
+        <id property="itemCode" column="item_code"/>
+        <id property="optionName" column="option_name"/>
+        <id property="optionStock" column="option_stock"/>
+        <id property="optionPriceUd" column="option_price_ud"/>
+        <association property="item" javaType="com.shop.myapp.dto.Item">
+            <result property="itemCode" column="item_code"/>
+            <result property="itemPrice" column="item_price"/>
+            <result property="itemName" column="item_name"/>
+            <result property="memberId" column="member_id"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="itemImage" column="item_image"/>
+        </association>
+    </resultMap>
+
+
+    <update id="insertItemOptions" parameterType="list">
+        insert into HR.SHOP_ITEM_OPTIONS_TB(option_code, item_code, option_name, option_price_ud, OPTION_STOCK)
+        SELECT CODE_ITEM_OPTIONS_SQ.nextval AS option_code ,
+        O.* FROM (   <foreach collection="list" item="itemOption" separator="UNION ALL ">
+        select
+        #{itemOption.itemCode} as item_code,
+        #{itemOption.optionName} as option_name,
+        #{itemOption.optionPriceUd} as option_price_ud,
+        #{itemOption.optionStock} as option_stock
+        from sys.dual
+    </foreach> ) O
+    </update>
+
+    <update id="modifyItemOption">
+        <foreach collection="list" item="itemOption">
+            merge into SHOP_ITEM_OPTIONS_TB
+            using dual
+            on (ITEM_CODE = #{itemOption.itemCode} and OPTION_NAME =#{itemOption.optionName}) when matched then
+            update set OPTION_NAME = #{itemOption.optionName}, OPTION_STOCK = #{itemOption.optionStock},OPTION_PRICE_UD = #{itemOption.optionPriceUd} ,is_delete = #{itemOption.isDelete}
+            when not matched then
+            insert (option_code, item_code, option_name, option_price_ud, option_stock, is_delete)
+            values ( CODE_ITEM_OPTIONS_SQ.nextval,#{itemOption.itemCode},#{itemOption.optionName},#{itemOption.optionPriceUd},#{itemOption.optionStock},'0' )
+        </foreach>
+    </update>
+    <update id="modifyItemOptionStockByOptionCode" parameterType="com.shop.myapp.dto.OrderDetail">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set OPTION_STOCK = OPTION_STOCK - #{amount}
+        where option_code = #{optionCode}
+    </update>
+    <update id="isDeleteItemOption">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set IS_DELETE ='1'
+        where OPTION_CODE = #{optionCode}
+    </update>
+    <update id="isDeleteByItemCode">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set IS_DELETE = '1'
+        where HR.SHOP_ITEM_OPTIONS_TB.ITEM_CODE = #{itemCode}
+    </update>
+    <update id="modifyItemOptionStockByOptionCodeWhenRefund">
+        update HR.SHOP_ITEM_OPTIONS_TB
+        set OPTION_STOCK = OPTION_STOCK + #{amount}
+        where option_code = #{optionCode}
+    </update>
+    <delete id="deleteWhenItemUpdate">
+        delete
+        from SHOP_ITEM_OPTIONS_TB
+        where ITEM_CODE = #{itemCode};
+    </delete>
+
+    <select id="findByOptionCode" resultType="com.shop.myapp.dto.ItemOption">
+        select *
+        from SHOP_ITEM_OPTIONS_TB O
+        where O.is_delete = '0'
+          and O.OPTION_CODE = #{optionCode}
+    </select>
+    <select id="findOneByItemCode" resultMap="itemOption">
+        select *
+        from SHOP_ITEM_OPTIONS_TB O,
+             SHOP_ITEM_TB I
+        where O.IS_DELETE = '0'
+          and O.OPTION_CODE = #{optionCode}
+          and O.ITEM_CODE = I.ITEM_CODE
+    </select>
+    <select id="findByOptionCodeWhenOrderValidate" resultType="com.shop.myapp.dto.ItemOption">
+        select *
+        from HR.SHOP_ITEM_OPTIONS_TB O
+        where O.IS_DELETE = '0'
+          and O.OPTION_STOCK != 0
+          and OPTION_CODE = #{optionCode}
+    </select>
+    <select id="findByOptionCodeForOrder" resultType="com.shop.myapp.dto.ItemOption">
+        select *
+        from SHOP_ITEM_OPTIONS_TB O
+        where O.OPTION_CODE = #{optionCode}
+    </select>
+
+</mapper>

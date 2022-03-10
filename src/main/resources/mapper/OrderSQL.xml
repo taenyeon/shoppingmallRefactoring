@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.OrderRepository">
+
+    <resultMap id="order" type="com.shop.myapp.dto.Order">
+        <id property="orderCode" column="order_code"/>
+        <id property="totalPay" column="total_pay"/>
+        <id property="memberId" column="member_id"/>
+        <id property="buyerName" column="buyer_name"/>
+        <id property="buyerTel" column="buyer_tel"/>
+        <id property="buyerEmail" column="buyer_email"/>
+        <id property="buyerAddr" column="buyer_addr"/>
+        <id property="buyerPostCode" column="buyer_post_code"/>
+        <id property="isPaid" column="is_paid"/>
+        <id property="paidAt" column="paid_at"/>
+        <id property="impUid" column="imp_uid"/>
+        <id property="change" column="change"/>
+        <collection property="orderDetails" ofType="com.shop.myapp.dto.OrderDetail" javaType="java.util.List">
+            <result property="orderDetailCode" column="order_detail_code"/>
+            <result property="orderCode" column="order_code"/>
+            <result property="optionCode" column="option_code"/>
+            <result property="amount" column="amount"/>
+            <result property="postedStatus" column="posted_status"/>
+            <result property="orderPrice" column="order_price"/>
+            <result property="postPrice" column="post_price"/>
+            <association property="itemOption" resultMap="itemOption"/>
+        </collection>
+    </resultMap>
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <result property="optionCode" column="option_code"/>
+        <result property="optionName" column="option_name"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="optionPriceUd" column="option_price_ud"/>
+        <association property="item" javaType="com.shop.myapp.dto.Item">
+            <result property="itemCode" column="item_code"/>
+            <result property="itemImage" column="ITEM_IMAGE"/>
+            <result property="itemName" column="item_name"/>
+            <result property="itemPrice" column="item_price"/>
+        </association>
+    </resultMap>
+    <insert id="insertOrder">
+        insert into SHOP_ORDER_TB (order_code, member_id, total_pay,
+                                   buyer_name, buyer_tel,
+                                   buyer_email, buyer_addr, buyer_post_code)
+        values (#{orderCode},
+                #{memberId},
+                #{totalPay},
+                #{buyerName},
+                #{buyerTel},
+                #{buyerEmail},
+                #{buyerAddr},
+                #{buyerPostCode})
+    </insert>
+    <update id="updateIsPaidIntByOrderCode">
+        update SHOP_ORDER_TB
+        set IS_PAID = 'paid',
+            IMP_UID = #{payment.impUid},
+            paid_at = #{payment.paidAt}
+        where ORDER_CODE = #{param1}
+    </update>
+    <update id="updateChangeWhenCancel" parameterType="com.shop.myapp.dto.OrderDetail">
+        update HR.SHOP_ORDER_TB
+        set HR.SHOP_ORDER_TB.CHANGE = HR.SHOP_ORDER_TB.CHANGE + ((#{amount} * #{orderPrice}) +(#{amount} * #{postPrice}))
+        where order_code = #{orderCode}
+    </update>
+    <delete id="deleteOrderByOrderCode">
+        delete SHOP_ORDER_TB
+        where ORDER_CODE = #{orderCode}
+    </delete>
+    <select id="findOrderByMemberId" resultMap="order">
+        select *
+        from HR.SHOP_ORDER_TB O,
+             HR.SHOP_ORDER_DETAIL_TB D
+        where O.MEMBER_ID = #{memberId}
+          and O.order_code = D.order_code order by paid_at desc
+    </select>
+    <select id="findByOrderCode" resultMap="order">
+        select *
+        from HR.SHOP_ORDER_TB O,
+             HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where O.ORDER_CODE = #{orderCode}
+          and D.order_code = O.order_code
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
+    </select>
+</mapper>

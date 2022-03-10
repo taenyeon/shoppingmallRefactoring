@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.CartRepository">
+
+    <resultMap id="cart" type="com.shop.myapp.dto.Cart">
+        <id property="cartId" column="cart_id"/>
+        <id property="memberId" column="member_id"/>
+        <id property="amount" column="amount"/>
+        <association property="itemOption" resultMap="itemOption"/>
+    </resultMap>
+
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <result property="optionCode" column="option_code"/>
+        <result property="optionName" column="option_name"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="optionPriceUd" column="option_price_ud"/>
+        <result property="optionStock" column="option_stock"/>
+        <result property="isDelete" column="option_is_delete"/>
+        <association property="item" resultMap="item"/>
+    </resultMap>
+
+    <resultMap id="item" type="com.shop.myapp.dto.Item">
+        <result property="itemCode" column="item_code"/>
+        <result property="itemImage" column="ITEM_IMAGE"/>
+        <result property="itemName" column="item_name"/>
+        <result property="itemPrice" column="item_price"/>
+        <result property="isDelete" column="item_is_delete"/>
+        <association property="country" javaType="com.shop.myapp.dto.Country">
+            <result property="countryCode" column="country_code"/>
+            <result property="countryName" column="country_name"/>
+            <result property="countryPostPrice" column="country_post_price"/>
+        </association>
+    </resultMap>
+
+    <insert id="insertCart" parameterType="com.shop.myapp.dto.Cart">
+        <selectKey resultType="java.lang.String" keyProperty="cartId" order="BEFORE">
+            SELECT CODE_CARD_SQ.nextval FROM sys.DUAL
+        </selectKey>
+        insert into SHOP_CART_TB(CART_ID,
+        member_id,
+        OPTION_CODE,AMOUNT
+        ) values (#{cartId},
+        #{memberId},
+        #{optionCode},
+        #{amount})
+    </insert>
+    <update id="amountSetByCartId">
+        update HR.SHOP_CART_TB set HR.SHOP_CART_TB.AMOUNT = HR.SHOP_CART_TB.AMOUNT
+        <choose>
+            <when test='mathSign == "+"'>+</when>
+            <when test='mathSign == "-"'>-</when>
+        </choose>
+        1 where CART_ID = #{cartId}
+    </update>
+    <delete id="deleteCartByCartId">
+        delete HR.SHOP_CART_TB
+        where CART_ID = #{cartId}
+    </delete>
+    <delete id="deleteCartByMemberId">
+        delete HR.SHOP_CART_TB
+        where MEMBER_ID = #{memberId}
+    </delete>
+    <select id="findByMemberId" resultMap="cart">
+        select cart.CART_ID            as cart_id,
+               cart.MEMBER_ID          as member_id,
+               cart.AMOUNT             as amount,
+               item.ITEM_NAME          as item_name,
+               item.ITEM_PRICE         as item_price,
+               item.ITEM_CODE          as item_code,
+               item.ITEM_IMAGE         as item_image,
+               options.OPTION_NAME     as option_name,
+               options.OPTION_PRICE_UD as option_price_ud,
+               options.OPTION_CODE     as option_code,
+               options.OPTION_STOCK    as option_stock,
+               item.COUNTRY_CODE as country_code,
+               COUNTRY_NAME,
+               COUNTRY_POST_PRICE
+        from HR.SHOP_CART_TB cart,
+             HR.SHOP_ITEM_TB item,
+             HR.SHOP_ITEM_OPTIONS_TB options,
+             HR.SHOP_COUNTRY_TB country
+        where cart.MEMBER_ID = #{memberId} and item.is_delete = '0'
+          and cart.option_code = options.option_code
+          and options.item_code = item.item_code
+          and item.country_code = country.country_code
+    </select>
+    <select id="findAll" resultType="com.shop.myapp.dto.Cart">
+        select *
+        from HR.SHOP_CART_TB;
+    </select>
+    <select id="findByCartId" resultType="com.shop.myapp.dto.Cart">
+        select *
+        from HR.SHOP_CART_TB
+        where CART_ID = #{cartId}
+    </select>
+    <select id="findSelectCartByCartCodes" resultMap="cart">
+        select cart.CART_ID as cart_id,
+        cart.MEMBER_ID as member_id,
+        cart.AMOUNT as amount,
+        cart.OPTION_CODE,
+        item.ITEM_NAME as item_name,
+        item.ITEM_PRICE as item_price,
+        item.ITEM_CODE as item_code,
+        item.ITEM_IMAGE as item_image,
+        item.IS_DELETE as item_is_delete,
+        options.OPTION_NAME as option_name,
+        options.OPTION_PRICE_UD as option_price_ud,
+        options.OPTION_CODE as option_code,
+        options.OPTION_STOCK as option_stock,
+        options.IS_DELETE as option_is_delete,
+        item.COUNTRY_CODE as country_code,
+        COUNTRY_NAME,
+        COUNTRY_POST_PRICE
+        from HR.SHOP_CART_TB cart,
+        HR.SHOP_ITEM_TB item,
+        HR.SHOP_ITEM_OPTIONS_TB options,
+        HR.SHOP_COUNTRY_TB country
+        where (<foreach collection="list" item="cartCode" open="(" close=")" separator="or">
+        cart_id =#{cartCode}
+    </foreach>)
+        and cart.option_code = options.option_code
+        and options.item_code = item.item_code
+        and item.country_code = country.country_code
+    </select>
+    <select id="findMyCartByOptionCode" resultType="com.shop.myapp.dto.Cart">
+        select * from HR.SHOP_CART_TB where MEMBER_ID = #{memberId} and option_code = #{optionCode}
+    </select>
+
+
+</mapper>

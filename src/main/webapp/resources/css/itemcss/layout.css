@@ -1,0 +1,204 @@
+/* -------------------------------------------------------------------------------
+    Layout
+ ------------------------------------------------------------------------------- */
+#skipToContent {
+  z-index: 9998;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -1px;
+  width: 100%;
+  height: 1px;
+}
+
+#wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  margin: auto;
+  max-width: 1920px;
+}
+
+/*header*/
+#header {
+  z-index: 300;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-width: 1280px;
+  background-color: #fff;
+  margin: auto;
+}
+#header > .header {
+  position: relative;
+  width: 100%;
+}
+#header > .header .head {
+  position: relative;
+  margin: auto;
+  max-width: 1100px;
+  line-height: 40px;
+}
+#header > .header .head h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#header > .header .head h1 a {
+  display: block;
+  width: 137px;
+  height: 100px;
+  font-size: 0;
+  background: url("~@/pc/assets/images/common/h1_logo.png") no-repeat left center;
+}
+#header > .header .s-head {
+	margin-top:10px;
+  display: flex;
+  justify-content: flex-end;
+}
+#header > .header .s-head .top-serch {
+  position: relative;
+}
+#header > .header .s-head .top-serch input {
+	width:200px;
+	padding: 0 40px 0 10px;
+	height: 40px;
+	border-bottom: 2px solid #ddd;
+}
+#header > .header .s-head .top-serch button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 40px;
+	height: 40px;
+	font-size: 0;
+	background: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8' standalone='no'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%2335353d;%7D%3C/style%3E%3C/defs%3E%3Ctitle%3EAsset 19%3C/title%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cg id='Layer_1-2' data-name='Layer 1'%3E%3Cpath class='cls-1' d='M63.22,59.45,47.3,43.53a26.7,26.7,0,1,0-3.77,3.77L59.45,63.22a2.67,2.67,0,0,0,3.77-3.77ZM26.67,48A21.34,21.34,0,1,1,48,26.67,21.36,21.36,0,0,1,26.67,48Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") no-repeat center center / 20px 20px;
+}
+#header > .header .s-head .s-nav {
+  display: flex;
+}
+#header > .header .s-head .s-nav li {
+  margin-left: 20px;
+}
+#header > .header .head .gnb {
+  margin: 0 0 1px 150px;
+  height: 80px;
+}
+#header > .header .head .gnb a {
+  display: block;
+}
+#header > .header .head .gnb > ul {
+  margin: auto;
+  width: 930px;
+}
+#header > .header .head .gnb > ul > li {
+  position: relative;
+  display: block;
+  float: left;
+  width: 170px;
+  text-align: center;
+}
+#header > .header .head .gnb > ul > li > a {
+  display: block;
+  padding: 17px 10px;
+  text-align: center;
+  font-size: 20px;
+  color: #1c1c1c;
+}
+#header > .header .head .gnb ul li a.active, #header > .header .head .gnb ul li a.default {
+  position: relative;
+  font-family: "hanwhaB";
+}
+#header .head_line {
+	display: block;
+  width: 100%;
+  height: 1px;
+  background: #eee;
+}
+
+/* -------------------------------------------------------------------------------
+    content
+ ------------------------------------------------------------------------------- */
+#container {
+  padding-top: 134px;
+  width: 100%;
+  min-width: 1280px;
+  z-index: 1;
+  min-height: calc(100vh - 200px);
+}
+#container > #content {
+  margin: auto;
+  padding: 60px 90px 110px;
+  width: 1280px;
+  height: 100%;
+}
+
+
+/* -------------------------------------------------------------------------------
+    footer
+ ------------------------------------------------------------------------------- */
+#footer {
+  color: #cecece;
+  background: #9a9a9a;
+  min-width: 1280px;
+}
+#footer .footer_box {
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 1280px;
+  padding: 50px 90px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1;
+}
+#footer .footer_box .foot_link {
+  display: flex;
+}
+#footer .footer_box .foot_link li {
+  position: relative;
+  padding: 0 17px 0 0;
+  font-size: 16px;
+  color: #fff;
+}
+#footer .footer_box .foot_link li:after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 9px;
+  width: 1px;
+  height: 14px;
+  background: #6c6c6c;
+}
+#footer .footer_box .foot_link li:last-child {
+  padding: 0;
+}
+#footer .footer_box .foot_link li:last-child:after {
+  display: none;
+}
+#footer .footer_box .address {
+  clear: both;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #cecece;
+}
+#footer .footer_box .address address {
+  margin: 0 10px 0 0;
+  display: inline-block;
+  float: left;
+}
+#footer .footer_box .address address span {
+  display: inline-block;
+  float: left;
+}
+#footer .footer_box .address .copy {
+  margin: 15px 0 0;
+  font-family: "hanwhaM";
+}
+.customer-box {
+	width: 200px;
+}

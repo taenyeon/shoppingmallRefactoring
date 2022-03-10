@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.QnaRepository">
+
+	<select id="findAll" resultType="com.shop.myapp.dto.QnaBoard">
+        SELECT * FROM SHOP_QNABOARD_TB where ITEM_CODE = #{itemCode} ORDER BY ITEM_CODE DESC
+    </select>
+    <update id="reply">
+    	UPDATE SHOP_QNABOARD_TB SET BOARD_REPLY = #{boardReply} WHERE BOARD_ID = #{boardId}
+    </update>
+    <insert id="insertWrite">
+        INSERT INTO SHOP_QNABOARD_TB
+        VALUES (BOARD_ID_SQ.NEXTVAL, #{itemCode}, #{memberId},
+                #{boardTitle}, #{boardContent}, #{boardReply,jdbcType=VARCHAR}
+                )
+    </insert>
+</mapper>

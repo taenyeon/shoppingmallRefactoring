@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.OrderDetailRepository">
+    <resultMap id="orderDetail" type="com.shop.myapp.dto.OrderDetail">
+        <id property="orderDetailCode" column="order_detail_code"/>
+        <id property="orderCode" column="order_code"/>
+        <id property="optionCode" column="option_code"/>
+        <id property="amount" column="amount"/>
+        <id property="postedStatus" column="posted_status"/>
+        <id property="orderPrice" column="order_price"/>
+        <id property="postPrice" column="post_price"/>
+        <association property="order" javaType="com.shop.myapp.dto.Order">
+            <result property="orderCode" column="order_code"/>
+            <result property="impUid" column="imp_uid"/>
+            <result property="totalPay" column="total_pay"/>
+            <result property="memberId" column="member_id"/>
+            <result property="buyerName" column="buyer_name"/>
+            <result property="buyerEmail" column="buyer_email"/>
+            <result property="buyerAddr" column="buyer_addr"/>
+            <result property="buyerPostCode" column="buyer_post_code"/>
+            <result property="isPaid" column="is_paid"/>
+            <result property="change" column="change"/>
+            <result property="paidAt" column="paid_at"/>
+        </association>
+        <association property="itemOption" column="option_code" resultMap="itemOption"/>
+    </resultMap>
+
+    <resultMap id="itemOption" type="com.shop.myapp.dto.ItemOption">
+        <result property="optionCode" column="option_code"/>
+        <result property="optionName" column="option_name"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="optionPriceUd" column="option_price_ud"/>
+        <association property="item" javaType="com.shop.myapp.dto.Item">
+            <result property="itemCode" column="item_code"/>
+            <result property="itemImage" column="ITEM_IMAGE"/>
+            <result property="itemName" column="item_name"/>
+            <result property="itemPrice" column="item_price"/>
+        </association>
+    </resultMap>
+
+    <update id="insertOrderDetails" parameterType="list">
+        insert into HR.SHOP_ORDER_DETAIL_TB(order_detail_code, order_code, option_code, AMOUNT,ORDER_PRICE,POST_PRICE)
+        SELECT CODE_ORDER_DETAIL_SQ.nextval AS order_detail_code
+        ,T.*
+        FROM (<foreach collection="list" item="orderDetail" separator="UNION ALL ">
+        select
+        #{orderDetail.orderCode} as order_code,
+        #{orderDetail.itemOption.optionCode} as option_code,
+        #{orderDetail.amount} as amount,
+        #{orderDetail.orderPrice} as order_price,
+        #{orderDetail.postPrice} as post_price
+        from dual
+    </foreach> ) T
+    </update>
+    <update id="updatePostedStatusByOrderCode">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'Paid'
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
+    </update>
+    <update id="updateWhenCancel">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'Refund'
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_DETAIL_CODE = ${orderDetailCode}
+    </update>
+    <update id="updatePostedStatusByOrderDetailCode">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = #{postedStatus}
+        where order_detail_code = #{orderDetailCode}
+    </update>
+    <update id="updatePostedStatusByOrderDetailCodeAfterReview">
+        update HR.SHOP_ORDER_DETAIL_TB
+        set HR.SHOP_ORDER_DETAIL_TB.POSTED_STATUS = 'Review'
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_DETAIL_CODE = #{orderDetailCode}
+    </update>
+    <delete id="deleteOrderDetail">
+        delete HR.SHOP_ORDER_DETAIL_TB
+        where HR.SHOP_ORDER_DETAIL_TB.ORDER_CODE = #{orderCode}
+    </delete>
+    <select id="findByOrderDetailCode" resultMap="orderDetail">
+        select *
+        from HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ORDER_TB O,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where D.ORDER_DETAIL_CODE = #{orderDetailCode}
+          and O.ORDER_CODE = D.ORDER_CODE
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
+    </select>
+    <select id="findByMemberIdForSeller" resultMap="orderDetail">
+        select *
+        from HR.SHOP_ORDER_DETAIL_TB D,
+             HR.SHOP_ORDER_TB O,
+             HR.SHOP_ITEM_OPTIONS_TB IO,
+             HR.SHOP_ITEM_TB I
+        where I.MEMBER_ID = #{memberId}
+          and O.ORDER_CODE = D.ORDER_CODE
+          and IO.option_code = D.option_code
+          and I.item_code = IO.item_code
+<choose>
+  <when test="type != null and type == 'name'">
+      and I.item_name like '%' ||  #{search} || '%'
+  </when>
+    <when test="type != null and type == 'postedStatus'">
+        and D.posted_status = #{search}
+    </when>
+</choose>
+    </select>
+
+</mapper>
