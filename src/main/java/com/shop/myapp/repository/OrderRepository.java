@@ -7,13 +7,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface OrderRepository {
     int insertOrder(Order order);
     int deleteOrderByOrderCode(@Param("orderCode") String orderCode);
     List<Order> findOrderByMemberId(String memberId);
-    Order findByOrderCode(String orderCode);
+    Optional<Order> findByOrderCode(String orderCode);
     int updateIsPaidIntByOrderCode(@Param("orderCode") String orderCode, @Param("payment") Payment payment);
     int updateChangeWhenCancel(OrderDetail orderDetail);
 }

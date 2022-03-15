@@ -9,11 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d90a6b1e-ca45-4b9b-a039-1c5199606e5e" name="Changes" comment="2022/03/10 기존 쇼핑몰 프로젝트 리팩토링 시작&#10;회원 권한 리팩토링">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="d90a6b1e-ca45-4b9b-a039-1c5199606e5e" name="Changes" comment="2022/03/10 회원 서비스 리팩토링">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/SellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/SellerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/dto/MemberSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/dto/MemberSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderDetailRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ItemOptionSQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ItemOptionSQL.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +95,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.31609195" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -335,14 +345,13 @@
       <workItem from="1646838349976" duration="51000" />
       <workItem from="1646838404501" duration="4251000" />
       <workItem from="1646892988014" duration="1433000" />
-      <workItem from="1646899726975" duration="1231000" />
-    </task>
-    <task id="LOCAL-00014" summary="2022/02/08 JSON parsing dependency 추가">
-      <created>1644395292770</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1644395292770</updated>
+      <workItem from="1646899726975" duration="3734000" />
+      <workItem from="1646963885066" duration="4006000" />
+      <workItem from="1646994265153" duration="7181000" />
+      <workItem from="1647217181216" duration="27000" />
+      <workItem from="1647217532217" duration="87000" />
+      <workItem from="1647223444854" duration="1834000" />
+      <workItem from="1647331725438" duration="3180000" />
     </task>
     <task id="LOCAL-00015" summary="2022/02/11 공공 API 국가코드 추가">
       <created>1644552201313</created>
@@ -680,7 +689,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646884427513</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="2022/03/10 회원 서비스 리팩토링">
+      <created>1646920916977</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1646920916977</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -716,7 +732,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2022/02/24 ExceptionAdvice" />
     <MESSAGE value="2022/02/24 결제 상품 부분환불 구현" />
     <MESSAGE value="2022/02/24 부분 환불 테스트 &amp; 환불시 테이블 처리" />
     <MESSAGE value="2022/02/25 주문정보 View 아코디언 추가" />
@@ -741,7 +756,8 @@
     <MESSAGE value="2022/03/01 프로젝트 마무리" />
     <MESSAGE value="2022/03/02 프로젝트 수정" />
     <MESSAGE value="2022/03/10 기존 쇼핑몰 프로젝트 리팩토링 시작&#10;회원 권한 리팩토링" />
-    <option name="LAST_COMMIT_MESSAGE" value="2022/03/10 기존 쇼핑몰 프로젝트 리팩토링 시작&#10;회원 권한 리팩토링" />
+    <MESSAGE value="2022/03/10 회원 서비스 리팩토링" />
+    <option name="LAST_COMMIT_MESSAGE" value="2022/03/10 회원 서비스 리팩토링" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,6 +1,8 @@
 package com.shop.myapp.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
@@ -35,9 +37,7 @@ public class MemberController {
 
     @GetMapping("/join")
     public String joinForm() {
-    	//authService.checkMemberId("");
     	log.info("joinForm");
-    	
     	return "/members/join";
     }
    
@@ -45,8 +45,7 @@ public class MemberController {
     public String join(@ModelAttribute Member member) {
     	// 에러가 있는지 검사
     	log.info("join");
-    	int isSuccess = memberService.insertMember(member);
-    	System.out.println("회원가입 성공("+isSuccess+")");
+    	memberService.insertMember(member);
     	return "redirect:/";
     }
     
@@ -93,9 +92,7 @@ public class MemberController {
         if (!mSession.getMemberId().equals(memberId)){
             throw new IllegalStateException("권한 없음");
         }
-    	int isDelete = memberService.deleteMember(memberId);
-    	System.out.println("회원탈퇴 성공("+isDelete+")");
-    	log.info("update complete.");
+    	memberService.deleteMember(memberId);
     	request.getSession().invalidate();
     	return "redirect:/";
     }
@@ -109,12 +106,11 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@ModelAttribute Member member, HttpServletRequest request){
     	Member mem = memberService.loginMember(member);
-    	
-    	MemberSession mSession = new MemberSession();
-    	mSession.setMemberId(mem.getMemberId());
-    	mSession.setMemberLevel(mem.getMemberLevel());
-    	
-    	request.getSession().setAttribute("member",mSession);
+        MemberSession memberSession = MemberSession.builder()
+                .memberId(mem.getMemberId())
+                .memberLevel(mem.getMemberLevel())
+                .build();
+        request.getSession().setAttribute("member",memberSession);
 
     	return "redirect:/";
     }

@@ -46,7 +46,8 @@ public class OrderDetailService {
     }
 
     public OrderDetail findByOrderDetailCode(String orderDetailCode) {
-        return orderDetailRepository.findByOrderDetailCode(orderDetailCode);
+        return orderDetailRepository.findByOrderDetailCode(orderDetailCode)
+                .orElseThrow(() -> new IllegalStateException("주문 정보를 찾을 수 없습니다."));
     }
 
     public boolean orderDetailRefund(OrderDetail orderDetail) throws ParseException, JsonProcessingException {

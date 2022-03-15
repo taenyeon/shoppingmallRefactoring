@@ -26,7 +26,7 @@ public class ReviewService {
 	}
 	
 	public Review getReview(String reviewCode) {
-		return reviewRepository.findByReviewCode(reviewCode);
+		return reviewRepository.findByReviewCode(reviewCode).orElseThrow(()->new IllegalStateException("리뷰를 찾을 수 없습니다."));
 	}
 	
 	

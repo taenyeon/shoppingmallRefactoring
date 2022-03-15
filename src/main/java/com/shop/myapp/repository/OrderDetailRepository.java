@@ -1,16 +1,16 @@
 package com.shop.myapp.repository;
 
-import com.shop.myapp.dto.Order;
 import com.shop.myapp.dto.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface OrderDetailRepository {
     int insertOrderDetails(List<OrderDetail> orderDetails);
-    OrderDetail findByOrderDetailCode(String orderDetailCode);
+    Optional<OrderDetail> findByOrderDetailCode(String orderDetailCode);
     int deleteOrderDetail(String orderCode);
     int updatePostedStatusByOrderCode(String orderCode);
     int updatePostedStatusByOrderDetailCodeAfterReview(String orderDetailCode);

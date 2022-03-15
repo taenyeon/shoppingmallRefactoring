@@ -59,7 +59,7 @@ public class SellerController {
     @PostMapping("/{memberId}/update")
     public String updateSellerInfo(@PathVariable String memberId, Member member, RedirectAttributes redirectAttributes){
         member.setMemberId(memberId);
-        int i = memberService.updateSellerInfo(member);
+        memberService.updateSellerInfo(member);
         redirectAttributes.addAttribute("memberId",memberId);
         return "redirect:/seller/{memberId}";
     }

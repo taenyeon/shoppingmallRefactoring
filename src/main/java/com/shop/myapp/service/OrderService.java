@@ -75,7 +75,7 @@ public class OrderService {
 
     public Payment validateTotalPay(String impUid, String orderCode) throws ParseException, JsonProcessingException {
         // 주문 코드에 해당하는 주문 객체 가져옴.
-            Order order = orderRepository.findByOrderCode(orderCode);
+            Order order = findByOrderCode(orderCode);
             // impUid 를 IamPort 서버에 전달하여 결제 정보 응답받음.
             Payment payment = iamPortService.getImpAttributes(impUid);
             // 주문 객체의 결제 금액과 IamPort 의 결제 금액이 불일치할 경우,
@@ -106,7 +106,7 @@ public class OrderService {
 
 
     public Order findByOrderCode(String orderCode) {
-        return orderRepository.findByOrderCode(orderCode);
+        return orderRepository.findByOrderCode(orderCode).orElseThrow(() -> new IllegalStateException("주문을 찾을 수 없습니다."));
     }
     public List<Order> myOrder(String memberId){
         List<Order> orders = orderRepository.findOrderByMemberId(memberId);

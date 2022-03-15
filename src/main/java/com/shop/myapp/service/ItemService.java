@@ -26,6 +26,11 @@ public class ItemService {
 
     }
 
+    /**
+     * 상품 조회
+     * @param itemCode 상품번호
+     * @return 상품 정보
+     */
     public Item getItem(String itemCode) {
         // itemCode 로 상품 조회
         itemRepository.itemHitUpWhenInItemDetail(itemCode);
@@ -36,33 +41,69 @@ public class ItemService {
         return item.orElseThrow(() -> new IllegalStateException("Not Found Item"));
     }
 
+    /**
+     *
+     * @param pagination 페이징 처리 객체
+     * @return 페이지에 해당하는 상품 12개
+     */
     public List<Item> getItems(Pagination pagination) {
         return itemRepository.findAll(pagination);
     }
 
+    /**
+     *
+     * @param item 등록할 상품 정보
+     * @return 상품 & 상품 옵션 insert -> 결괏값
+     */
     public int createItem(Item item) {
         itemRepository.insertItem(item);
         return itemOptionService.insertItemOptions(item.getItemOptions(), item.getItemCode());
     }
 
+    /**
+     *
+     * @param itemCode 삭제할 상품번호
+     * @return 상품 & 상품 옵션 delete -> 결괏값
+     */
     public int deleteItem(String itemCode) {
         itemOptionService.deleteByItemCode(itemCode);
         return itemRepository.deleteItem(itemCode);
     }
 
+    /**
+     *
+     * @param item 수정할 상품번호 & 수정할 내용
+     * @return 상품 & 상품 옵션 update -> 결괏값
+     */
     public int updateItem(Item item) {
         itemOptionService.modifyItemOption(item.getItemOptions(),item.getItemCode());
         return itemRepository.updateItem(item);
     }
 
+    /**
+     *
+     * @param search 검색어
+     * @return 검색에 따른 상품의 총 갯수 (검색어가 없다면 모든 상품)
+     */
     public int getItemListCnt(String search) {
         return itemRepository.getItemListCnt(search);
     }
 
+    /**
+     *
+     * @param memberId 회원 아이디
+     * @return 해당 회원이 등록한 상품의 총 갯수
+     */
     public int getItemListCntByMemberId(String memberId){
         return itemRepository.getItemListCntByMemberId(memberId);
     }
 
+    /**
+     *
+     * @param search
+     * @param pagination
+     * @return
+     */
     public List<Item> search(String search,Pagination pagination) {
         if (search == null || search.equals("") || search.equals(" ")){
             return itemRepository.findAll(pagination);

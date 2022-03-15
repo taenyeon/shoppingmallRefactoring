@@ -38,11 +38,15 @@
         <foreach collection="list" item="itemOption">
             merge into SHOP_ITEM_OPTIONS_TB
             using dual
-            on (ITEM_CODE = #{itemOption.itemCode} and OPTION_NAME =#{itemOption.optionName}) when matched then
-            update set OPTION_NAME = #{itemOption.optionName}, OPTION_STOCK = #{itemOption.optionStock},OPTION_PRICE_UD = #{itemOption.optionPriceUd} ,is_delete = #{itemOption.isDelete}
+            on (ITEM_CODE = #{itemOption.itemCode} and OPTION_NAME =#{itemOption.optionName})
+            when matched then
+            update set OPTION_NAME = #{itemOption.optionName}, OPTION_STOCK = #{itemOption.optionStock},
+            OPTION_PRICE_UD= #{itemOption.optionPriceUd} ,is_delete = #{itemOption.isDelete}
             when not matched then
             insert (option_code, item_code, option_name, option_price_ud, option_stock, is_delete)
-            values ( CODE_ITEM_OPTIONS_SQ.nextval,#{itemOption.itemCode},#{itemOption.optionName},#{itemOption.optionPriceUd},#{itemOption.optionStock},'0' )
+            values (
+            CODE_ITEM_OPTIONS_SQ.nextval,#{itemOption.itemCode},#{itemOption.optionName},#{itemOption.optionPriceUd},#{itemOption.optionStock},'0'
+            )
         </foreach>
     </update>
     <update id="modifyItemOptionStockByOptionCode" parameterType="com.shop.myapp.dto.OrderDetail">

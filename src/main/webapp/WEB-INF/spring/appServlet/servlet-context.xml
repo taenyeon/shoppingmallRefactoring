@@ -42,7 +42,7 @@
     <!-- mybatis setting -->
     <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <beans:property name="url" value="jdbc:oracle:thin:@192.168.35.39:1521:xe"/>
+        <beans:property name="url" value="jdbc:oracle:thin:@192.168.1.115:1521:xe"/>
         <beans:property name="username" value="hr"/>
         <beans:property name="password" value="1234"/>
     </beans:bean>

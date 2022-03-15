@@ -1,6 +1,7 @@
 package com.shop.myapp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +13,7 @@ import com.shop.myapp.dto.Review;
 public interface ReviewRepository {
 	List<Review> findAll(@Param("itemCode") String itemCode);
 	List<Review> getReivewList(); 
-	Review findByReviewCode(String reviewCode);
+	Optional<Review> findByReviewCode(String reviewCode);
 	int insertReview(Review review);
 	int deleteReview(String review);
 	int updateReview(@Param("reviewCode")String reviewCode,@Param("reviewContent") String reviewContent);
