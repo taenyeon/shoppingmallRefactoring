@@ -32,7 +32,6 @@ public class CartTest {
         cart.setAmount(1);
         int result = cartService.insertCart(cart);
         assertEquals(result,1);
-
     }
 
     @Test

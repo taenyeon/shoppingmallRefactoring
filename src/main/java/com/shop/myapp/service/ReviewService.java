@@ -24,7 +24,12 @@ public class ReviewService {
 
 		this.orderDetailService = orderDetailService;
 	}
-	
+
+	/**
+	 * 
+	 * @param reviewCode
+	 * @return
+	 */
 	public Review getReview(String reviewCode) {
 		return reviewRepository.findByReviewCode(reviewCode).orElseThrow(()->new IllegalStateException("리뷰를 찾을 수 없습니다."));
 	}
@@ -33,12 +38,6 @@ public class ReviewService {
 	 public List<Review> getReviews(String itemCode) {
 	        return reviewRepository.findAll(itemCode);
 	    }
-	
-	/*public List<Review> reviewList(){
-		List<Review> reviews = new ArrayList<>();
-		reviews = reviewRepository.getReivewList();
-		return reviews;
-	}*/
 
 	    public int insertReview(Review review) {
 			orderDetailService.updatePostedStatusByOrderDetailCodeAfterReview(review.getOrderDetailCode());

@@ -73,7 +73,7 @@ public class OrderController {
     @PostMapping("/{orderCode}/cancel")
     @ResponseBody
     public ResponseEntity<Object> cancelOrder(@PathVariable String orderCode) {
-        orderService.cancelOrder(orderCode); // 리턴 받을 필요 없어보임(?)
+        orderService.cancelOrder(orderCode);
         return ResponseEntity.ok().build();
     }
 

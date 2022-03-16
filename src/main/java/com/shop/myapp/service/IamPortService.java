@@ -1,6 +1,7 @@
 package com.shop.myapp.service;
 
 import com.shop.myapp.dto.Payment;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,11 +17,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * IamPort 결제 모듈 API 를 사용하여 실제 결제 처리
+ * IamPort 서버와의 요청,응답에 대한 처리
+ */
 @Service
 @Slf4j
 @Transactional(rollbackFor = {Exception.class})
 public class IamPortService {
-
+    /**
+     *
+     * @param restResponse
+     * @return
+     * @throws ParseException
+     */
     public JSONObject parsingRestAttribute(ResponseEntity<String> restResponse) throws ParseException {
         JSONParser parser = new JSONParser();
         JSONObject responseBody = (JSONObject) parser.parse(restResponse.getBody());

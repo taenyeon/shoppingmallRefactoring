@@ -15,6 +15,6 @@ public @interface Auth {
 		SELLER,
 		ADMIN
 	}
-	// 이와 같이 작성하면 메서드 위에 @Auth(role=Role.ADMIN)과 같이 작성 가능
+
 	 Role role() default Role.USER;
 }

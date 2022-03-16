@@ -21,16 +21,30 @@ public class QnaService {
 	public QnaService(@Autowired SqlSession sqlSession) {
 		this.qnaRepository = sqlSession.getMapper(QnaRepository.class);
 	}
-	
+
+	/**
+	 * 해당 상품의 QnA 조회
+	 * @param itemCode 상품번호
+	 * @return 상품에 대한 QnA들
+	 */
 	public List<QnaBoard> getList(String itemCode) {
-		log.info("QNA List~");
 		return qnaRepository.findAll(itemCode);
 	}
-	
+
+	/**
+	 * QnA 작성
+	 * @param qna QnA 정보
+	 * @return QnA DB 저장 결과
+	 */
 	public int insertWrite(QnaBoard qna) {
 		return qnaRepository.insertWrite(qna);
 	}
 
+	/**
+	 * 작성된 QnA에 대한 답글 작성
+	 * @param qna QnA 정보
+	 * @return QnA 답글 DB 저장 결과
+	 */
 	public int reply(QnaBoard qna) {
 		return qnaRepository.reply(qna);
 	}

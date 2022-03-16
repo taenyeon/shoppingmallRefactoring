@@ -73,7 +73,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // 7. admin 일 경우
+        // 7. 권한 비교
         boolean isAuth = false;
         for (String s : authUser.getMemberLevel()){
             Auth.Role userRole = Auth.Role.valueOf(s);
@@ -84,24 +84,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (!isAuth){
             throw new IllegalStateException("해당 권한이 없습니다.");
         }
-
-
-//        if (auth.role() == Auth.Role.ADMIN) {
-//            // admin
-//            if (!authUser.getMemberLevel().toString().contains("ADMIN")) {// admin이 아니므로 return false
-//                throw new IllegalStateException(" 해당 권한이 없습니다.");
-//            }
-//        } else if (auth.role() == Auth.Role.SELLER) {
-//            // seller
-//            if (!authUser.getMemberLevel().toString().contains("SELLER")) {// seller 가 아니므로 return false
-//                throw new IllegalStateException(" 해당 권한이 없습니다.");
-//            }
-//        } else if (auth.role() == Auth.Role.USER) {
-//            // user
-//            if (!authUser.getMemberLevel().toString().contains("USER")) {// user 가 아니므로 return false
-//                throw new IllegalStateException(" 해당 권한이 없습니다.");
-//            }
-//        }
 
         // 8. 접근허가
         return true;

@@ -32,24 +32,49 @@ public class OrderDetailService {
         this.itemOptionService = itemOptionService;
     }
 
+    /**
+     * 주문 등록시, 주문 상세 상품 등록
+     * @param orderDetails 주문 상세 상품 정보들
+     */
     public void insertOrderDetails(List<OrderDetail> orderDetails) {
         orderDetailRepository.insertOrderDetails(orderDetails);
 
     }
 
+    /**
+     * 주문 취소시, 해당 주문번호에 해당하는 상세 상품 삭제
+     * @param orderCode 주문번호
+     */
     public void deleteOrderDetail(String orderCode) {
         orderDetailRepository.deleteOrderDetail(orderCode);
     }
 
+    /**
+     * 주문 결제 완료시, 주문 상세 상품들의 상태 배송 준비로 변경
+     * @param orderCode 주문번호
+     */
     public void updatePostedStatusByOrderCode(String orderCode) {
         orderDetailRepository.updatePostedStatusByOrderCode(orderCode);
     }
 
+    /**
+     * 주문 상세 상품 정보 조회
+     * @param orderDetailCode 주문 상세번호
+     * @return 주문 상세 상품 정보
+     */
     public OrderDetail findByOrderDetailCode(String orderDetailCode) {
         return orderDetailRepository.findByOrderDetailCode(orderDetailCode)
                 .orElseThrow(() -> new IllegalStateException("주문 정보를 찾을 수 없습니다."));
     }
 
+    /**
+     * 주문 상세 상품 환불 -> IamPort API 서버에 요청
+     * 현재까지의 환불 금액과 IamPort API 서버에 저장된 환불 금액이 일치하는지 검증
+     * @param orderDetail 주문 상세번호
+     * @return 현재까지의 환불 금액과 IamPort API 서버에 저장된 환불 금액 검증 결과
+     * @throws ParseException 응답받은 String 타입의 json 데이터 파싱 실패
+     * @throws JsonProcessingException 환불 요청시, 요청 json 데이터 변환 실패
+     */
     public boolean orderDetailRefund(OrderDetail orderDetail) throws ParseException, JsonProcessingException {
         // 환불에 사용할 imp_uid 와 amount 를 저장할 HashMap 선언.
         Map<String, Object> refundDetail = new HashMap<>();
@@ -69,9 +94,17 @@ public class OrderDetailService {
         // 불일치시, IamPort 에서 전달한 메세지의 IllegalStateException 발생. (동시 환불 요청 or 환불 금액 불일치)
         if (iamPortService.cancel(refundDetailString) == (change+ refund)) {
             orderDetailRepository.updateWhenCancel(orderDetail.getOrderDetailCode());
+            return true;
         }
         return false;
     }
+
+    /**
+     * 결제 금액 오류시, IamPort API 서버에 환불 요청 -> 추후에 요청 과정 IamPort 서비스에 통합
+     * @param payment 결제정보
+     * @throws ParseException 응답받은 String 타입의 json 데이터 파싱 실패
+     * @throws JsonProcessingException 환불 요청시, 요청 json 데이터 변환 실패
+     */
     public void orderRefund(Payment payment) throws ParseException, JsonProcessingException {
         // 환불에 사용할 imp_uid 와 amount 를 저장할 HashMap 선언.
         Map<String, Object> refundDetail = new HashMap<>();
@@ -86,6 +119,14 @@ public class OrderDetailService {
         String refundDetailString = objectMapper.writeValueAsString(refundDetail);
         iamPortService.cancel(refundDetailString);
     }
+
+    /**
+     * 환불 완료시, 주문 상세 상태 변경
+     * @param orderDetail 주문 상세번호
+     * @return 주문 상세 DB 수정 결과
+     * @throws ParseException 응답받은 String 타입의 json 데이터 파싱 실패
+     * @throws JsonProcessingException 환불 요청시, 요청 json 데이터 변환 실패
+     */
     public boolean orderCancelService(OrderDetail orderDetail) throws ParseException, JsonProcessingException {
         // 환불이 일치했을때,
         if (orderDetailRefund(orderDetail)){
@@ -101,14 +142,35 @@ public class OrderDetailService {
         return false;
     }
 
+    /**
+     * 주문 상세 배송 상태 환불로 변경
+     * @param orderDetailCode 주문 상세번호
+     * @return 주문 상세 DB 업데이트 결과
+     */
     public int updateWhenCancel(String orderDetailCode) {
         return orderDetailRepository.updateWhenCancel(orderDetailCode);
     }
 
+    /**
+     * 회원의 주문 상세 검색
+     * @param memberId 회원 아이디
+     * @param search 검색어
+     * @param type 검색타입(배송상태, 상품이름)
+     * @return 검색어에 따른 주문 상세들
+     */
     public List<OrderDetail> getOrderDetailByItemWriter(String memberId,String search,String type){
         return orderDetailRepository.findByMemberIdForSeller(memberId,search,type);
     }
 
+    /**
+     * 셀러 권한으로 주문된 주문 상세 상품의 배송 상태 변경
+     * 만약, 환불로 변경시, 해당 상품 환불 처리
+     * @param orderDetailCode 주문 상세번호
+     * @param postedStatus 주문상태
+     * @return 주문 상세 DB 업데이트 결과
+     * @throws ParseException 응답받은 String 타입의 json 데이터 파싱 실패
+     * @throws JsonProcessingException 환불 요청시, 요청 json 데이터 변환 실패
+     */
     public int updatePostedStatusByOrderDetailCode(String orderDetailCode, String postedStatus) throws ParseException, JsonProcessingException {
         if (postedStatus.equals("Refund")){
             OrderDetail orderDetail = findByOrderDetailCode(orderDetailCode);
@@ -117,6 +179,11 @@ public class OrderDetailService {
         return orderDetailRepository.updatePostedStatusByOrderDetailCode(orderDetailCode, postedStatus);
     }
 
+    /**
+     * 배송 완료된 상품 리뷰 작성시, 해당 주문 상세 상품의 구매 확정 처리 -> 메소드 이름이 너무 긺.
+     * @param orderDetailCode 주문 상세번호
+     * @return 주문 상세 DB 업데이트 결과
+     */
     public int updatePostedStatusByOrderDetailCodeAfterReview(String orderDetailCode){
         return orderDetailRepository.updatePostedStatusByOrderDetailCodeAfterReview(orderDetailCode);
     }

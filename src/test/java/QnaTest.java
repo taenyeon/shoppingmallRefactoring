@@ -23,8 +23,8 @@ public class QnaTest {
                 .atZone(ZoneId.of("Asia/Seoul"))
                 .toLocalDateTime();
         System.out.println(paidDate);
-
     }
+
     @Test
     public void arrCheck(){
         List<Integer> numList = new LinkedList<>();

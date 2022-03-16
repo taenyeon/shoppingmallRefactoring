@@ -9,21 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d90a6b1e-ca45-4b9b-a039-1c5199606e5e" name="Changes" comment="2022/03/10 회원 서비스 리팩토링">
+    <list default="true" id="d90a6b1e-ca45-4b9b-a039-1c5199606e5e" name="Changes" comment="2022/03/10 주석 추가">
       <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/SellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/SellerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/dto/MemberSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/dto/MemberSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderDetailRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderDetailRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/repository/ReviewRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/QnaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/controller/QnaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/dto/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/dto/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/interceptor/Auth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/interceptor/Auth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/interceptor/AuthInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/interceptor/AuthInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/IamPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/IamPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ItemOptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ItemOptionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/MemberService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderDetailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/QnaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/QnaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shop/myapp/service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ItemOptionSQL.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ItemOptionSQL.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/CartTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/CartTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/QnaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/QnaTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,16 +126,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.55">
-    <configuration name="DateTest.parseDate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="myapp" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DateTest" />
-      <option name="METHOD_NAME" value="parseDate" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="OrderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="myapp" />
       <option name="PACKAGE_NAME" value="" />
@@ -166,6 +160,16 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="QnaTest" />
       <option name="METHOD_NAME" value="arrCheck" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="QnaTest.dateTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="myapp" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="QnaTest" />
+      <option name="METHOD_NAME" value="dateTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -262,10 +266,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.QnaTest.arrCheck" />
+        <item itemvalue="JUnit.QnaTest.dateTest" />
         <item itemvalue="JUnit.OrderTest.insertOrderAndOrderDetails" />
         <item itemvalue="JUnit.OrderTest.findByOrderCode" />
         <item itemvalue="JUnit.OrderTest" />
-        <item itemvalue="JUnit.DateTest.parseDate" />
       </list>
     </recent_temporary>
   </component>
@@ -351,14 +355,11 @@
       <workItem from="1647217181216" duration="27000" />
       <workItem from="1647217532217" duration="87000" />
       <workItem from="1647223444854" duration="1834000" />
-      <workItem from="1647331725438" duration="3180000" />
-    </task>
-    <task id="LOCAL-00015" summary="2022/02/11 공공 API 국가코드 추가">
-      <created>1644552201313</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1644552201313</updated>
+      <workItem from="1647331725438" duration="3905000" />
+      <workItem from="1647356515965" duration="11749000" />
+      <workItem from="1647411013684" duration="758000" />
+      <workItem from="1647416036798" duration="927000" />
+      <workItem from="1647421658165" duration="966000" />
     </task>
     <task id="LOCAL-00016" summary="2022/02/11 Spring Test 추가">
       <created>1644560282471</created>
@@ -696,7 +697,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646920916977</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="2022/03/10 주석 추가">
+      <created>1647356138850</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1647356138851</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,7 +740,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="2022/02/24 결제 상품 부분환불 구현" />
     <MESSAGE value="2022/02/24 부분 환불 테스트 &amp; 환불시 테이블 처리" />
     <MESSAGE value="2022/02/25 주문정보 View 아코디언 추가" />
     <MESSAGE value="2022/02/25 Auth 처리" />
@@ -757,7 +764,8 @@
     <MESSAGE value="2022/03/02 프로젝트 수정" />
     <MESSAGE value="2022/03/10 기존 쇼핑몰 프로젝트 리팩토링 시작&#10;회원 권한 리팩토링" />
     <MESSAGE value="2022/03/10 회원 서비스 리팩토링" />
-    <option name="LAST_COMMIT_MESSAGE" value="2022/03/10 회원 서비스 리팩토링" />
+    <MESSAGE value="2022/03/10 주석 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="2022/03/10 주석 추가" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

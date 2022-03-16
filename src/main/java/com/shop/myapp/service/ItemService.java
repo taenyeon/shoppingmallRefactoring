@@ -100,9 +100,9 @@ public class ItemService {
 
     /**
      *
-     * @param search
-     * @param pagination
-     * @return
+     * @param search 검색어
+     * @param pagination 해당 페이지 객체
+     * @return 검색어에 해당하는 상품 12개
      */
     public List<Item> search(String search,Pagination pagination) {
         if (search == null || search.equals("") || search.equals(" ")){
@@ -112,12 +112,25 @@ public class ItemService {
         }
     }
 
+    /**
+     *
+     * @param page 현재 페이지
+     * @param search 검색어
+     * @return 검색어에 해당하는 현재 페이지 객체
+     */
     public Pagination getPaginationByPage(int page,String search) {
         Pagination pagination = new Pagination();
         int itemListCnt = getItemListCnt(search);
         pagination.pageInfo(page, itemListCnt);
         return pagination;
     }
+
+    /**
+     *
+     * @param page 현재 페이지
+     * @param memberId 상점 등록자
+     * @return 상점에서 등록한 상품 12개
+     */
     public Pagination getPaginationByMemberId(int page,String memberId) {
         Pagination pagination = new Pagination();
         int itemListCnt = getItemListCntByMemberId(memberId);
@@ -125,6 +138,12 @@ public class ItemService {
         return pagination;
     }
 
+    /**
+     *
+     * @param itemCode 상품번호
+     * @param member 로그인 세션 객체
+     * @return 상품에 대한 접근 권한
+     */
     public boolean validateAccessToItem(String itemCode, MemberSession member) {
         Optional<Item> itemOptional = itemRepository.findByItemCode(itemCode);
         Item item = itemOptional.orElseThrow(() -> new IllegalStateException("아이템 검색 실패"));
@@ -132,16 +151,37 @@ public class ItemService {
         return item.getMemberId().equals(member.getMemberId()) || member.getMemberLevel().equals("관리자");
     }
 
+    /**
+     *
+     * @param memberId 상품 등록자
+     * @param pagination 페이징 객체
+     * @param search 검색어
+     * @return 상점에서 등록한 검색어에 해당하는 상품 12개
+     */
     public List<Item> getSellerItemByMemberId(String memberId, Pagination pagination,String search){
         return itemRepository.findAllByMemberId(memberId,pagination,search);
     }
+
+    /**
+     *
+     * @return 메인 페이지의 새로운 상품 4개
+     */
     public List<Item> findNewItems(){
         return itemRepository.findNewItems();
     }
+
+    /**
+     *
+     * @return 메인 페이지의 조회수 많은 상품 4개
+     */
     public List<Item> findHitItems(){
         return itemRepository.findHitItems();
     }
 
+    /**
+     *
+     * @return 메인 페이지의 많이 팔린 상품 4개
+     */
     public List<Item> findSellItems(){
         return itemRepository.findBuyItems();
     }

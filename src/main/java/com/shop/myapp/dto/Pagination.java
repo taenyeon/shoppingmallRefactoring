@@ -5,9 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
+/*
+  페이징 처리 객체
+ */
 public class Pagination {
 
-    private int listSize = 12;                //초기값으로 목록개수를 10으로 셋팅
+    private int listSize = 12;
     private int page;
     private int listCnt;
     private int pageCnt;
@@ -29,10 +32,9 @@ public class Pagination {
         System.out.println(pageCnt);
         //게시판 시작번호
         this.startList = (page - 1) * listSize;
-        System.out.println(startList);
 
         this.endList = page * listSize;
-        System.out.println(endList);
+        // 현제 페이지 기준으로 보여줄 페이지 수 계산
         if (page >= 3) {
             if (pageCnt - page <= 2){
                 this.startPage = pageCnt - 4;
