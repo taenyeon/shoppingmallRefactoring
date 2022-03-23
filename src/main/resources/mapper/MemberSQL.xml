@@ -10,15 +10,12 @@
          			MEMBER_LEVEL,
          	</if>
                                    MEMBER_NAME, MEMBER_EMAIL, MEMBER_ADDRESS, MEMBER_DETAIL_ADDRESS,
-                                   MEMBER_TEL, MEMBER_BIRTH, BUSINESS_REGISTRATION_NO,
-                                   BUSINESS_NAME, BUSINESS_INFO)
+                                   MEMBER_TEL, MEMBER_BIRTH)
         VALUES (#{memberId}, #{memberPwd},
           	<if test ="memberLevelToString != null and !memberLevelToString.equals('')">
         		#{memberLevelToString},
         	</if>
                 #{memberName}, #{memberEmail}, #{memberAddress}, #{memberDetailAddress}, #{memberTel}, #{memberBirth}
-                   , #{businessRegistrationNo,jdbcType=VARCHAR}, #{businessName,jdbcType=VARCHAR}
-                   ,#{businessInfo,jdbcType=VARCHAR})
     </insert>
     <update id="updateMember">
         UPDATE SHOP_MEMBER_TB
@@ -36,11 +33,6 @@
         		BUSINESS_REGISTRATION_NO = #{businessRegistrationNo}
             </if>
         WHERE MEMBER_ID = #{memberId}
-    </update>
-    
-    <update id="updateSeller" >
-        update HR.SHOP_MEMBER_TB
-set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{businessInfo} where member_id = #{memberId}
     </update>
     
     <update id="updateByAdmin" >
@@ -75,6 +67,7 @@ set HR.SHOP_MEMBER_TB.BUSINESS_NAME = #{businessName}, business_info = #{busines
         SELECT TO_CHAR(PAID_AT,'YYYY-MM-DD') as paid_at, SUM(TOTAL_PAY) AS TOTAL_PAY
         FROM SHOP_ORDER_TB GROUP BY TO_CHAR(PAID_AT,'YYYY-MM-DD') ORDER BY PAID_AT ASC
     </select>
+
     <select id="findByIdAdmin" resultType="com.shop.myapp.dto.Member">
         SELECT *
         FROM SHOP_MEMBER_TB

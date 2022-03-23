@@ -1,10 +1,9 @@
 package com.shop.myapp.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.shop.myapp.dto.Shop;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,15 +39,15 @@ public class MemberController {
     	log.info("joinForm");
     	return "/members/join";
     }
-   
+
     @PostMapping("/join")
-    public String join(@ModelAttribute Member member) {
+    public String join(@ModelAttribute Member member, @ModelAttribute Shop shop) {
     	// 에러가 있는지 검사
     	log.info("join");
-    	memberService.insertMember(member);
+    	memberService.insertMember(member,shop);
     	return "redirect:/";
     }
-    
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
     	request.getSession().invalidate();
@@ -68,7 +67,7 @@ public class MemberController {
     	model.addAttribute("member", member);
     	return "/members/info";
     }
-    
+
     @Auth(role = Auth.Role.USER)
     @PostMapping("/{memberId}/update")
     public String update(@ModelAttribute Member member) {
@@ -84,7 +83,7 @@ public class MemberController {
     	System.out.println("회원정보 수정 성공("+isSuccess+")");
     	return "redirect:/";
     }
-    
+
     @Auth(role = Auth.Role.USER)
     @GetMapping("/{memberId}/delete")
     public String delete(@PathVariable String memberId, HttpServletRequest request) {

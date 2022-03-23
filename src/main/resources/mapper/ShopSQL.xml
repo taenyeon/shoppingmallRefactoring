@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.myapp.repository.ShopRepository">
+    <insert id="insertShop">
+        insert into SHOP_MEMBER_SHOP_TB (member_id,
+                                         shop_name,
+                                         shop_registration_no)
+        VALUES (#{memberId},#{shopName},#{shopRegistrationNo})
+    </insert>
+    <update id="updateByShopName">
+        update SHOP_MEMBER_SHOP_TB
+        set SHOP_INFO = #{shopInfo}
+        where shop_name = #{shopName}
+
+    </update>
+    <update id="deleteByMemberId">
+        update SHOP_MEMBER_SHOP_TB
+        set IS_DELETE = 1
+        where MEMBER_ID = #{memberId}
+    </update>
+
+    <select id="findByShopName" resultType="com.shop.myapp.dto.Shop">
+        select member_id,
+               shop_name,
+               shop_info,
+               shop_registration_no,
+               is_delete
+        from SHOP_MEMBER_SHOP_TB
+        where SHOP_NAME = #{shopName}
+    </select>
+</mapper>

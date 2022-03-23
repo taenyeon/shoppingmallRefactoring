@@ -153,13 +153,13 @@ public class ItemService {
 
     /**
      *
-     * @param memberId 상품 등록자
+     * @param shopName 상점 이름
      * @param pagination 페이징 객체
      * @param search 검색어
      * @return 상점에서 등록한 검색어에 해당하는 상품 12개
      */
-    public List<Item> getSellerItemByMemberId(String memberId, Pagination pagination,String search){
-        return itemRepository.findAllByMemberId(memberId,pagination,search);
+    public List<Item> getSellerItemByMemberId(String shopName, Pagination pagination,String search){
+        return itemRepository.findAllByMemberId(shopName,pagination,search);
     }
 
     /**

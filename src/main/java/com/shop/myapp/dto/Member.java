@@ -25,24 +25,12 @@ public class Member {
 	private String memberTel;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;
-	private String businessRegistrationNo;
-	private String businessName;
-	private String businessInfo;
 	private String isDelete;
 	
     public void setMemberLevel(String memberLevel) {
-    	System.out.println("객체접근");
     	this.memberLevelToString = memberLevel;
-    	List<String> list = new ArrayList<>();
-    	try {
-    		list  =  Arrays.asList(memberLevel.trim().split(","));    		
-    	}catch (Exception e) {
-			e.printStackTrace();
-		}
-    	LinkedList<String> levels = new LinkedList<>(list);
-    	System.out.println("객체 ->"+levels.toString());
-    	System.out.println("ToString -> "+memberLevelToString);
-    	this.memberLevel = levels;
+    	List<String> levelList = Arrays.asList(memberLevel.trim().split(","));
+		this.memberLevel = new LinkedList<>(levelList);
     }
 
 }
