@@ -2,7 +2,6 @@ package com.shop.myapp.dto;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,8 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.annotation.RegEx;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 
 @Getter @Setter
 public class Member {
@@ -68,8 +69,7 @@ public class Member {
 			message = "전화번호 형식에 맞게 입력해주세요.")
 	private String memberTel;
 
-	@NotBlank(message = "생일을 입력해주세요.")
-	@Past
+//	@NotBlank(message = "생일을 입력해주세요.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate memberBirth;
 

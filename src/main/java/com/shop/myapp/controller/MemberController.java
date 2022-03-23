@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import com.shop.myapp.interceptor.Auth;
 import com.shop.myapp.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @Controller
@@ -44,14 +47,10 @@ public class MemberController {
 
     @PostMapping("/join")
     @ResponseBody
-    public String join(@Valid Member member, @Valid Shop shop,BindingResult errors,Model model) {
-        if (errors.hasErrors()){
-            model.addAttribute("errors",errors);
-        }
-    	// 에러가 있는지 검사
-    	log.info("join");
+    public ResponseEntity<Object> join(@Validated @ModelAttribute Member member, Shop shop) {
+        log.info("join");
     	memberService.insertMember(member,shop);
-    	return "redirect:/";
+    	return ResponseEntity.ok().build();
     }
 
     @GetMapping("/logout")

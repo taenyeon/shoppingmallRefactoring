@@ -9,8 +9,8 @@
 <script>
     $(function() {
         $("[name='chk_info']").change(
-            function() {
-            	if (this.value === "판매자") {
+            function () {
+                if (this.value === "판매자") {
                     let text = "<div class='mb-3' id='seller'> 사업자명 <br />"
                     text += "<input id='bName' class='form-control' type='text' name=shopName' />"
                     text += " 사업자번호 <br />"
@@ -21,11 +21,41 @@
                     $("#seller").remove();
                 }
             });
-       /*  $.getscript('regExp.js', function(){
-        	alert("겟스크립트~");
-            console.log('regExp.js loading!!');
-        }); */
-      
+
+        /*  $.getscript('regExp.js', function(){
+             alert("겟스크립트~");
+             console.log('regExp.js loading!!');
+         }); */
+
+        $(document).on("click", "button[id='join']", function () {
+            $('div[name^=error]').remove();
+            let form = $("#frm")[0];
+            let formData = new FormData(form);
+
+            $.ajax({
+                cache: false,
+                url: "/member/join",
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                data: formData,
+                statusCode: {
+                    200: function () {
+                    location.replace("/")
+                },
+                    400 : function (e) {
+                        $.each(e.responseJSON, function (key, value) {
+                            let msg = "<div name='error_"+key+"' style='color: red'>";
+                            msg += value;
+                            msg += "</div>"
+                            let input = $('input[name=' + key + ']');
+                            input.val("");
+                            input.after(msg);
+                        });
+                    }
+                }
+            });
+        })
     })
     window.onload = function() {
     document.getElementById("address_kakao").addEventListener("click",function() {
@@ -42,7 +72,7 @@
 <body class="pt-5">
 <div class ="container">
     <h2>회원가입</h2>
-    <form name="frm" method="POST" action="/members/join">
+    <form id="frm" method="POST">
         <div id="inputDiv">
             <input type="radio" id="userBtn" name="chk_info" value="일반회원" checked />
             <label for="userBtn">일반회원</label>
@@ -62,9 +92,8 @@
             </div>
             <div class="mb-3">
                 비밀번호 <br />
-                <input class="form-control" type="password" name="memberPwd" id="mPwd" onkeyup="checkCapsLock(event);"/> 
+                <input class="form-control" type="password" name="memberPwd" id="mPwd"/>
             </div>
-            <div id="msg" style="color: red"></div> 
             <div class="mb-3">
                 비밀번호 재확인 <br />
                 <input class="form-control" type="password" name="rePwd" id="rePwd"/> 
@@ -86,7 +115,7 @@
                 <input class="form-control" type="date" name="memberBirth" id="mBirth"/>
             </div>
         </div>
-        <input class="form-control" type="button" value="가입하기" onclick="joinCheck();">
+        <button class="form-control" type="button" id="join">가입하기</button>
     </form>
 </div>
 </body>
