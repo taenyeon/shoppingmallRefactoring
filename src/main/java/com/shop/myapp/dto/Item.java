@@ -19,8 +19,9 @@ public class Item {
     private String itemBrand;
     private List<ItemOption> itemOptions;
     private Country country;
-    private String businessName;
+    private String shopName;
     private String isDelete;
+    private Shop shop;
 
     public void calculateItemStock() {
         for (ItemOption itemOption : itemOptions) {

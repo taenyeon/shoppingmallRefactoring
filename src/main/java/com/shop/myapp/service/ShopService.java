@@ -2,14 +2,15 @@ package com.shop.myapp.service;
 
 import com.shop.myapp.dto.Shop;
 import com.shop.myapp.repository.ShopRepository;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ShopService {
     private final ShopRepository shopRepository;
 
-    public ShopService(ShopRepository shopRepository) {
-        this.shopRepository = shopRepository;
+    public ShopService(SqlSession session) {
+        this.shopRepository = session.getMapper(ShopRepository.class);
     }
 
     public int insertShop(Shop shop) {

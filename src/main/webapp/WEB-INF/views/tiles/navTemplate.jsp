@@ -100,26 +100,26 @@
 
                 </li>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'USER'}">
-                        <a class="nav-link" href="/members/${sessionScope.member.memberId }/info">개인정보</a>
+                        <a class="nav-link" href="/member/${sessionScope.member.memberId }/info">개인정보</a>
                         <a class="nav-link" href="/cart/myCart">장바구니</a>
                         <a class="nav-link" href="/order/myOrder">주문조회</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'SELLER'}">
-                        <a class="nav-link" href="/members/${sessionScope.member.memberId}/info">개인정보</a>
+                        <a class="nav-link" href="/member/${sessionScope.member.memberId}/info">개인정보</a>
                         <a class="nav-link" href="/seller/${sessionScope.member.memberId}">상점관리</a>
                     </c:if>
                     <c:if test="${sessionScope.member.memberLevel.getLast() == 'ADMIN'}">
                         <a class="nav-link" href="/admin/list">관리자모드</a>
                         <a class="nav-link" href="/admin/chart">주문토탈차트</a>
                     </c:if>
-                    <a class="nav-link" href="/members/logout">로그아웃</a>
+                    <a class="nav-link" href="/member/logout">로그아웃</a>
                 </c:when>
                     <c:otherwise>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" aria-current="page" href="/members/login">로그인</a>
+                            <a class="nav-link text-primary" aria-current="page" href="/member/login">로그인</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="/members/join">회원가입</a>
+                            <a class="nav-link text-primary" href="/member/join">회원가입</a>
                         </li>
                     </c:otherwise>
                 </c:choose>

@@ -73,7 +73,7 @@
 <body >
     <div id="sellerBar" class="p-2 mb-1 bg-light rounded-3">
     <a id="sellerLink" class="nav-link" href="/seller/${item.memberId}">
-        <h4 class="m-auto" style="padding-top: 5px; font-style: italic">✈ ${item.businessName}</h4>
+        <h4 class="m-auto" style="padding-top: 5px; font-style: italic">✈ ${item.shopName}</h4>
     </a>
     </div>
 <div class="container">

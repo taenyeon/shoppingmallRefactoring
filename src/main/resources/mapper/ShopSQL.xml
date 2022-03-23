@@ -7,7 +7,7 @@
         insert into SHOP_MEMBER_SHOP_TB (member_id,
                                          shop_name,
                                          shop_registration_no)
-        VALUES (#{memberId},#{shopName},#{shopRegistrationNo})
+        VALUES (#{memberId}, #{shopName}, #{shopRegistrationNo})
     </insert>
     <update id="updateByShopName">
         update SHOP_MEMBER_SHOP_TB

@@ -78,7 +78,7 @@
                             &nbsp; &nbsp;<span style="color: red; font-size: small">품절</span>
                         </c:if>
                             <br>
-                            <span class="card-text" style="color: #5b5b5b; font-size: x-small" ><c:out value="${item.businessName} 마켓"/></span>
+                            <span class="card-text" style="color: #5b5b5b; font-size: x-small" ><c:out value="${item.shopName} 마켓"/></span>
                         </div>
                     </div>
                 </a>

@@ -47,7 +47,7 @@ public class ItemController {
         List<Item> items = itemService.getItems(pagination);
         model.addAttribute("items", items);
         for (Item item: items){
-            System.out.println(item.getBusinessName());
+            System.out.println(item.getShopName());
         }
         model.addAttribute("pagination", pagination);
         return "item/items";
@@ -74,7 +74,6 @@ public class ItemController {
         String absolutePath = request.getServletContext().getRealPath("/resources/");
         MemberSession member = (MemberSession) request.getSession().getAttribute("member");
         item.setMemberId(member.getMemberId());
-        item.setBusinessName(memberService.getMember(member.getMemberId()).getBusinessName());
         Map<String, String> fileInfo = fileService.boardFileUpload(file, absolutePath);
         item.setItemImage(fileInfo.get("path"));
         int itemResult = itemService.createItem(item);

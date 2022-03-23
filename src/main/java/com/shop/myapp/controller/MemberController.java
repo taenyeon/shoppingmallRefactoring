@@ -2,11 +2,13 @@ package com.shop.myapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import com.shop.myapp.dto.Shop;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/members")
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
@@ -37,11 +39,15 @@ public class MemberController {
     @GetMapping("/join")
     public String joinForm() {
     	log.info("joinForm");
-    	return "/members/join";
+    	return "/member/join";
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute Member member, @ModelAttribute Shop shop) {
+    @ResponseBody
+    public String join(@Valid Member member, @Valid Shop shop,BindingResult errors,Model model) {
+        if (errors.hasErrors()){
+            model.addAttribute("errors",errors);
+        }
     	// 에러가 있는지 검사
     	log.info("join");
     	memberService.insertMember(member,shop);
@@ -65,7 +71,7 @@ public class MemberController {
         log.info("memberUpdateForm");
     	Member member = memberService.getMember(memberId); 
     	model.addAttribute("member", member);
-    	return "/members/info";
+    	return "/member/info";
     }
 
     @Auth(role = Auth.Role.USER)
@@ -99,7 +105,7 @@ public class MemberController {
     @GetMapping("/login")
     public String loginForm() {
     	log.info("loginForm");
-    	return "/members/login";
+    	return "/member/login";
     }
     
     @PostMapping("/login")
