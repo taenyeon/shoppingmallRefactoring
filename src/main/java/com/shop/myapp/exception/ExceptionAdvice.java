@@ -28,7 +28,7 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<Object> methodArgumentNotValidExceptionAdvice(BindException e){
+    public ResponseEntity<Object> bindExceptionAdvice(BindException e){
         BindingResult bindingResult = e.getBindingResult();
         Map<String,String> errors = new HashMap<>();
         for (FieldError fieldError : bindingResult.getFieldErrors()){

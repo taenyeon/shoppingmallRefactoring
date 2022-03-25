@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 <!--카카오맵  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/resources/js/validationSubmit.js"></script>
 <script>
     $(function() {
         $("[name='chk_info']").change(
@@ -27,36 +28,14 @@
              console.log('regExp.js loading!!');
          }); */
 
-        $(document).on("click", "button[id='join']", function () {
-            $('div[name^=error]').remove();
-            let form = $("#frm")[0];
-            let formData = new FormData(form);
-
-            $.ajax({
-                cache: false,
-                url: "/member/join",
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                data: formData,
-                statusCode: {
-                    200: function () {
-                    location.replace("/")
-                },
-                    400 : function (e) {
-                        $.each(e.responseJSON, function (key, value) {
-                            let msg = "<div name='error_"+key+"' style='color: red'>";
-                            msg += value;
-                            msg += "</div>"
-                            let input = $('input[name=' + key + ']');
-                            input.val("");
-                            input.after(msg);
-                        });
-                    }
-                }
-            });
-        })
     })
+    $(document).on("click", "button[id='join']", function () {
+        let form = $("#frm")[0];
+        let formData = new FormData(form);
+        let url = $("#frm").attr("action");
+        alert(url);
+        postSubmit(url,formData);
+    });
     window.onload = function() {
     document.getElementById("address_kakao").addEventListener("click",function() {
                         new daum.Postcode(
@@ -72,7 +51,7 @@
 <body class="pt-5">
 <div class ="container">
     <h2>회원가입</h2>
-    <form id="frm" method="POST">
+    <form id="frm" method="POST" action="/member/join">
         <div id="inputDiv">
             <input type="radio" id="userBtn" name="chk_info" value="일반회원" checked />
             <label for="userBtn">일반회원</label>
@@ -80,19 +59,19 @@
             <label for="sellerBtn">판매자</label> <br />
             <div class="mb-3">
                 ID <br />
-                <input class="form-control" type="text" name="memberId" id="mId"/>
+                <input class="form-control" type="text" name="memberId" id="mId" placeholder="영어, 숫자, '_' 포함 5~11자리로 입력해주세요."/>
             </div>
             <div class="mb-3">
                 이름 <br />
-                <input class="form-control" type="text" name="memberName" id="mName" />
+                <input class="form-control" type="text" name="memberName" id="mName" placeholder="한글 3~6자리로 입력해주세요."/>
             </div>
             <div class="mb-3">
                 이메일 <br />
-                <input class="form-control" type="text" name="memberEmail" id="mEmail"/>
+                <input class="form-control" type="text" name="memberEmail" id="mEmail" placeholder="이메일 형식으로 작성해주세요."/>
             </div>
             <div class="mb-3">
                 비밀번호 <br />
-                <input class="form-control" type="password" name="memberPwd" id="mPwd"/>
+                <input class="form-control" type="password" name="memberPwd" id="mPwd" placeholder="영어, 숫자, 특수문자 포함 8~15자리로 입력해주세요."/>
             </div>
             <div class="mb-3">
                 비밀번호 재확인 <br />
@@ -100,15 +79,15 @@
             </div>
             <div class="mb-3">
                 주소 <br />
-                <input class="form-control" type="text" id="address_kakao" name="memberAddress" readonly />
+                <input class="form-control" type="text" id="address_kakao" name="memberAddress" placeholder="카카오 맵 이용하기" readonly style="background: none; cursor: pointer"/>
             </div>
             <div class="mb-3">
                 상세주소 <br />
-                <input class="form-control" type="text" name="memberDetailAddress" id="detailAddress"/> 
+                <input class="form-control" type="text" name="memberDetailAddress" id="detailAddress" placeholder="상세 주소를 입력해주세요."/>
             </div>
             <div class="mb-3">
                 전화번호 <br />
-                <input class="form-control" type="phone" name="memberTel" id="mTel"/> 
+                <input class="form-control" type="tel" name="memberTel" id="mTel" placeholder="예) 010-1234-5678"/>
             </div>
             <div class="mb-3">
                 생년월일 <br />
